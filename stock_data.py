@@ -67,52 +67,57 @@ def get_data(stock_list): # needs to be an array of objects, objects need stock_
         amount_changed = float(driver.find_element_by_xpath('/html/body/main/section/div[3]/div/div/div/div/div[2]/div/div[1]/span[2]').text[1:])
 
         # market_cap
-        check_market_cap = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td/span').text
-        
-        if check_market_cap[-1] == 'T':
-            market_cap = float(check_market_cap[1:-1]) * 1000000000000
-        elif check_market_cap[-1] == 'B':
-            print('true?') # come back to later
-            market_cap = float(check_market_cap[1:-1]) * 1000000000
-        elif check_market_cap == 'M':
-            market_cap = float(check_market_cap[1:-1]) * 1000000
-        else:
+        try:
+            if driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td/span'):
+                check_market_cap = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td/span').text
+                if check_market_cap[-1] == 'T':
+                    market_cap = float(check_market_cap[1:-1]) * 1000000000000
+                elif check_market_cap[-1] == 'B':
+                    print('true?') # come back to later
+                    market_cap = float(check_market_cap[1:-1]) * 1000000000
+                elif check_market_cap == 'M':
+                    market_cap = float(check_market_cap[1:-1]) * 1000000
+        except:
             market_cap = 'N/A'
 
         # enterprise_value
-        check_enterprise_value = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[1]/table/tbody/tr[2]/td/span').text
+        try:
+            if driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[1]/table/tbody/tr[2]/td/span'): 
+                check_enterprise_value = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[1]/table/tbody/tr[2]/td/span').text
 
-        if check_enterprise_value[-1] == 'T':
-            enterprise_value = float(check_enterprise_value[1:-1]) * 1000000000000
-        elif check_enterprise_value[-1] == 'B':
-            enterprise_value = float(check_enterprise_value[1:-1]) * 1000000000
-        elif check_enterprise_value[-1] == 'M':
-            enterprise_value = float(check_enterprise_value[1:-1]) * 1000000
-        else:
+                if check_enterprise_value[-1] == 'T':
+                    enterprise_value = float(check_enterprise_value[1:-1]) * 1000000000000
+                elif check_enterprise_value[-1] == 'B':
+                    enterprise_value = float(check_enterprise_value[1:-1]) * 1000000000
+                elif check_enterprise_value[-1] == 'M':
+                    enterprise_value = float(check_enterprise_value[1:-1]) * 1000000
+        except:
             enterprise_value = 'N/A'
 
         # ebitda
-        check_ebitda = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[2]/table/tbody/tr[2]/td/span').text
-
-        if check_ebitda[-1] == 'T':
-            ebitda = float(check_ebitda[1:-1]) * 1000000000000
-        elif check_ebitda[-1] == 'B':
-            ebitda = float(check_ebitda[1:-1]) * 1000000000
-        elif check_ebitda == 'M':
-            ebitda = float(check_enterprise_value[1:-1]) * 1000000
-        else:
+        try:
+            if driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[2]/table/tbody/tr[2]/td/span'):
+            check_ebitda = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[2]/table/tbody/tr[2]/td/span').text
+            if check_ebitda[-1] == 'T':
+                ebitda = float(check_ebitda[1:-1]) * 1000000000000
+            elif check_ebitda[-1] == 'B':
+                ebitda = float(check_ebitda[1:-1]) * 1000000000
+            elif check_ebitda == 'M':
+                ebitda = float(check_enterprise_value[1:-1]) * 1000000
+        except:
             ebitda = 'N/A'
 
         # income
-        check_income = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[2]/table/tbody/tr[3]/td/span').text
-        
-        if check_income[-1] == 'T':
-            income = float(check_income[1:-1]) * 1000000000000
-        elif check_income[-1] == 'B':
-            income = float(check_income[1:-1]) * 1000000000
-        elif check_income[-1] == 'M':
-            income = float(check_income[1:-1]) * 1000000
-        else:
+        try:
+            if driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[2]/table/tbody/tr[3]/td/span'):
+                check_income = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[1]/div[2]/table/tbody/tr[3]/td/span').text
+                if check_income[-1] == 'T':
+                    income = float(check_income[1:-1]) * 1000000000000
+                elif check_income[-1] == 'B':
+                    income = float(check_income[1:-1]) * 1000000000
+                elif check_income[-1] == 'M':
+                    income = float(check_income[1:-1]) * 1000000
+        except:
             income = 'N/A'
         # volume
         check_volume = driver.find_element_by_xpath('/html/body/main/section/div[4]/div[1]/div[2]/div[2]/div[1]/table/tbody/tr[1]/td').text.split(' / ')
@@ -131,9 +136,9 @@ def get_data(stock_list): # needs to be an array of objects, objects need stock_
             'market_cap': market_cap,
             'enterprise_value': enterprise_value,
             'volume_purchased': volume_purchased,
-            'volume_outstanding': volume_outstanding
+            'volume_outstanding': volume_outstanding,
+            'date': str(date.today())
         }
-            # 'date': date.today()
         
         # Insert stock object into database
         db.current_data.insert_one(stock_object)
